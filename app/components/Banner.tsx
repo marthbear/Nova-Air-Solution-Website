@@ -1,67 +1,73 @@
 "use client";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import Image from "next/image";
 
 export default function Banner() {
   const router = useRouter();
+  const pathname = usePathname();
+
+  const isActive = (path: string) => pathname === path;
+
   return (
-    <div className="bg-blue-600 text-white p-4 sticky top-0 z-50 flex justify-between items-center gap-1">
-      <button
-        onClick={() => {
-          console.log("Logo clicked");
-          router.push("/");
-        }}
-        className="logoButton"
-      >
-        <Image
-          src="/novalogo.jpg"
-          alt="Nova Air Solution"
-          width={50}
-          height={100}
-        />
-      </button>
-      <div className="flex gap-10 ml-auto">
+    <header className="bg-gradient-to-r from-blue-700 to-blue-900 text-white sticky top-0 z-50 shadow-lg">
+      <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+        {/* Logo */}
         <button
-          title="about"
-          onClick={() => {
-            console.log("About button pressed");
-            router.push("/about");
-          }}
-          className="bannerButtons"
+          onClick={() => router.push("/")}
+          className="flex items-center gap-3 hover:opacity-90 transition-opacity cursor-pointer"
         >
-          About
+          <Image
+            src="/novalogo.jpg"
+            alt="Nova Air Solution"
+            width={50}
+            height={50}
+            className="rounded-lg"
+          />
+          <span className="text-xl font-bold hidden sm:block">Nova Air Solution</span>
         </button>
-        <button
-          title="Request a Service"
-          onClick={() => {
-            console.log("Service Request Pressed");
-            router.push("/service-requests");
-          }}
-          className="bannerButtons"
-        >
-          Request Service
-        </button>
-        <button
-          title="contact"
-          onClick={() => {
-            console.log("contact pressed");
-            router.push("/contact");
-          }}
-          className="bannerButtons"
-        >
-          Contact
-        </button>
-        <button
-          title="service area"
-          onClick={() => {
-            console.log("service area pressed");
-            router.push("/servicearea");
-          }}
-          className="bannerButtons"
-        >
-          Service Area
-        </button>
+
+        {/* Navigation */}
+        <nav className="flex items-center gap-1 sm:gap-2">
+          <button
+            onClick={() => router.push("/about")}
+            className={`px-3 py-2 rounded-lg font-medium transition-all cursor-pointer ${
+              isActive("/about")
+                ? "bg-white text-blue-700"
+                : "hover:bg-blue-600"
+            }`}
+          >
+            About
+          </button>
+          <button
+            onClick={() => router.push("/service-requests")}
+            className={`px-3 py-2 rounded-lg font-medium transition-all cursor-pointer ${
+              isActive("/service-requests")
+                ? "bg-white text-blue-700"
+                : "hover:bg-blue-600"
+            }`}
+          >
+            Request Service
+          </button>
+          <button
+            onClick={() => router.push("/servicearea")}
+            className={`px-3 py-2 rounded-lg font-medium transition-all cursor-pointer ${
+              isActive("/servicearea")
+                ? "bg-white text-blue-700"
+                : "hover:bg-blue-600"
+            }`}
+          >
+            Service Area
+          </button>
+          <button
+            onClick={() => router.push("/contact")}
+            className={`px-3 py-2 rounded-lg font-medium transition-all cursor-pointer bg-orange-500 hover:bg-orange-600 ${
+              isActive("/contact") ? "ring-2 ring-white" : ""
+            }`}
+          >
+            Contact Us
+          </button>
+        </nav>
       </div>
-    </div>
+    </header>
   );
 }
