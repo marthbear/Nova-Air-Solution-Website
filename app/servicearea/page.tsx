@@ -39,7 +39,7 @@ export default function ServiceArea() {
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold mb-4 text-gray-800">Areas We Serve</h2>
             <p className="text-gray-600 max-w-2xl mx-auto text-lg">
-              Nova Air Solution provides professional HVAC services throughout the greater metropolitan area. Check below to see if we service your location.
+              Nova Air Solution provides professional HVAC services throughout the northern Virginia area. Check below to see if we service your location.
             </p>
           </div>
 

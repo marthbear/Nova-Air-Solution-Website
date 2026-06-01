@@ -1,5 +1,4 @@
-import { collection, addDoc } from "firebase/firestore";
-import { db } from "./firebase";
+import { supabase } from "./supabase";
 
 export type ServiceRequestInput = {
   name: string;
@@ -13,19 +12,19 @@ export type ServiceRequestInput = {
 };
 
 export async function addServiceRequest(request: ServiceRequestInput): Promise<void> {
-  const payload: Record<string, unknown> = {
+  const { error } = await supabase.from("service_requests").insert({
+    company_id: process.env.NEXT_PUBLIC_COMPANY_ID,
     name: request.name,
     phone: request.phone,
-    serviceType: request.serviceType,
+    email: request.email ?? null,
+    address: request.address ?? null,
+    service_type: request.serviceType,
+    is_emergency: request.isEmergency ?? null,
     description: request.description,
+    preferred_date: request.preferredDate ?? null,
     status: "Pending",
-    submittedAt: new Date().toISOString(),
-  };
+    submitted_at: new Date().toISOString(),
+  });
 
-  if (request.email) payload.email = request.email;
-  if (request.address) payload.address = request.address;
-  if (request.preferredDate) payload.preferredDate = request.preferredDate;
-  if (request.isEmergency !== undefined) payload.isEmergency = request.isEmergency;
-
-  await addDoc(collection(db, "serviceRequests"), payload);
+  if (error) throw error;
 }
